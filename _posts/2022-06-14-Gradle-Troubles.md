@@ -1,22 +1,24 @@
 ---
 layout: post
-title: Spring Boot Gradle Troubleshootings
-subtitle: 불편한 환경에서 Gradle..
+title: Gradle Troubles in Spring Boot
+subtitle: 다소 불편한 환경에서 Gradle
 gh-repo: daattali/beautiful-jekyll
 gh-badge: [star, fork, follow]
 tags: [gradle, spring-boot]
 comments: true
 ---
 
-# Gradle 초기화 시 발생하는 여러 문제에 대한 
+# 도입
 
-## No candidates found for method call plugins
+Gradle로 Spring Boot 프로젝트 구성 시 발생하는 여러 문제에 대한 대책 경험을 기록한다.  
+
+## 1. No candidates found for method call plugins
 
 `Reload All Gradle Projects` 후 재시도 하라는데 내 경우에는 별 개선이 없다.
 
 <br>
 
-## Plugin [id: 'org.springframework.boot', version: '2.2.5.RELEASE'] was not found in any of the following sources:
+## 2. Plugin [id: 'org.springframework.boot', version: '2.2.5.RELEASE'] was not found in any of the following sources:
 
 ### 첫번째 솔루션
 
@@ -49,7 +51,7 @@ rootProject.name = ...
 
 <br>    
 
-## Cause: unable to find valid certification path to requested target
+## 3. Cause: unable to find valid certification path to requested target
 
 인증서 문제. 아래 커맨드 참고해서 사용하는 JDK에 인증서 추가
 
@@ -60,7 +62,7 @@ keytool -import -trustcacerts -keystore /opt/java/jre/lib/security/cacerts \
 
 <br>
 
-## Could not initialize class org.codehaus.groovy.runtime.InvokerHelper
+## 4. Could not initialize class org.codehaus.groovy.runtime.InvokerHelper
 
 이건 Gradle과 JDK의 버전이 맞지 않아서 나오는 문제
 
@@ -68,8 +70,10 @@ keytool -import -trustcacerts -keystore /opt/java/jre/lib/security/cacerts \
 
 # 결론은...
 
-네트워크에 제약이 너무 많은 관계로 문제가 끝나지 않는다.  
-그냥 의존성을 로컬에서 관리하기로 하자. 추가할 때 좀 불편하겠지만, 이 상황보다 불편해질 수는 없다.
+알 수 없는 네트워크에 제약이 너무 많은 관계로 문제가 끝나지 않는다.  
+차라리 그냥 의존성을 로컬에서 관리하기로 하자. 
+
+물론 최초 의존성을 다운받는 과정이 불편하긴 하지만 이 상황보다 불편해질 수는 없다.
 
 ```gradle
 // jar 파일을 `libs`에 저장해 놓는다고 하면..
@@ -92,3 +96,7 @@ task getDeps(type:Copy) {
     println 'get-dependencies'
 }
 ```
+
+이외에도 로컬 시스템에 Repository 서버 등을 구축하는 것도 하나의 솔루션이 될 수 있을 것 같다.
+
+
