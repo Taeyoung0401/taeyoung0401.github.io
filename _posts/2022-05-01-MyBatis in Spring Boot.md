@@ -5,12 +5,13 @@ subtitle:
 gh-repo: daattali/beautiful-jekyll
 gh-badge: [star, fork, follow]
 tags: [spring-boot, mybatis]
-comments: true
 ---
+
 
 Spring Boot에서 MyBatis에서 사용 시 검토했던 내용 등을 기록한다.
 
-<br>
+
+
 
 # MyBatis 사용을 위한 설정
 
